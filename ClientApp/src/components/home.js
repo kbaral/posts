@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import AddComment from './addComment';
 
 export class Home extends Component {
   static displayName = Home.name;
@@ -37,7 +38,10 @@ export class Home extends Component {
                 <a href={`/postdetails/${post.id}`}> {post.author} </a>
                 on  {post.createdOn}</p>
             </div>
-          </div>)}
+              </div>)}
+                <div className='row'>
+                    <AddComment />
+                </div>
         </div>
       </div>
         
