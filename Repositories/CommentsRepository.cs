@@ -50,7 +50,7 @@ namespace ReactCore.Repositories
         /// <param name="commentId">The Email of the User</param>
         /// <param name="cancellationToken">Allows the UI to cancel an asynchronous request. Optional.</param>
         /// <returns>A User or null</returns>
-        public async  Task<IReadOnlyList<Comment>> GetCommentsForPostAsync(string postId, CancellationToken cancellationToken = default)
+        public async  Task<IEnumerable<Comment>> GetCommentsForPostAsync(string postId, CancellationToken cancellationToken = default)
         {
            var sortFilter = new BsonDocument("createdOn", -1);
             var filter = Builders<Comment>.Filter.Eq(m => m.PostId, postId);           
@@ -76,6 +76,7 @@ namespace ReactCore.Repositories
         {
             try
             {
+                comment.CreatedOn = DateTime.Now;
                 await _commentCollection.WithWriteConcern(WriteConcern.W1).InsertOneAsync(comment);
                 
                 return new CommentResponse(comment);

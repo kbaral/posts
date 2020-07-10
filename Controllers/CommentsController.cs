@@ -37,8 +37,9 @@ namespace ReactCore.Controllers
         /// <param name="comments">A comment object.</param>
         /// <returns></returns>
         [HttpPost("/api/v1/comments/add")]
-        public async Task<ActionResult> AddPost([FromBody] Comment comment)
-        {          
+        public async Task<ActionResult> AddComment([FromBody] Comment comment)
+        {
+           
             var response = await _commentsRepository.AddCommentAsync(comment);         
            return response.Comment != null ? Ok(new CommentResponse(response.Comment)) : Ok(response);
         }
@@ -54,9 +55,24 @@ namespace ReactCore.Controllers
         public async Task<IActionResult> GetAll(Post post)
         {
             var comments = await _commentsRepository.GetCommentsForPostAsync(post.Id);
+
             
              return Ok(comments);
         }
+
+        /// <summary>
+        ///     show the list of comments for a post
+        /// </summary>
+        /// <param name="comments">A comment object.</param>
+        /// <returns></returns>
+        [HttpPost("/api/v1/comments/show")]
+        public async Task<IActionResult> DisplayComment([FromBody] Comment comment)
+        {          
+            var response = await _commentsRepository.GetCommentsForPostAsync(comment.PostId);
+            response = response.Where(x => !string.IsNullOrEmpty(x.Name));
+           return Ok(response);
+        }
+
         
         /// <summary>
         ///     Adds a user to the system and generates a JWT token for the user
