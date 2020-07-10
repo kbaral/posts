@@ -54,7 +54,7 @@ export class PostDetails extends Component {
               <div className="post-preview">
                 <div>
                   <h2 className="post-title">{this.state.title}</h2>
-                  <h3 ><pre>{this.state.content}</pre></h3>
+                                <span className="post-subtitle"><pre>{this.state.content}</pre></span>
                 </div>
 
                 <p className="post-meta">
